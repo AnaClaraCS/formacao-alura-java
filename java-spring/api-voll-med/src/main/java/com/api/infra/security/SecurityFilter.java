@@ -12,7 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.api.domain.Usuario.UsuarioRepository;
 
-import io.micrometer.common.lang.NonNull;
+import org.springframework.lang.NonNull;
 
 import java.io.IOException;
 

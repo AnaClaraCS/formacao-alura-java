@@ -27,7 +27,7 @@ public class AgendaDeConsultas {
     @Autowired
     private List<ValidadorConsulta> validadores;
 
-    public void agendarConsulta(ConsultaDTO dados) {
+    public DadosDetalheConsulta agendarConsulta(ConsultaDTO dados) {
 
         if(!pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException ("Paciente não encontrado");
@@ -42,19 +42,23 @@ public class AgendaDeConsultas {
 
         Medico medico = escolherMedico(dados);
 
-        Consulta consulta = new Consulta(null, paciente, medico, dados.especialidade(), dados.data());
+        Consulta consulta = new Consulta(null, medico, paciente, dados.data());
         consultaRepository.save(consulta);
+
+        DadosDetalheConsulta detalheConsulta = new DadosDetalheConsulta(consulta);
+
+        return detalheConsulta;
 
     }
 
     private Medico escolherMedico(ConsultaDTO dados) {
         if(dados.idMedico() != null){
             return medicoRepository.getReferenceById(dados.idMedico());
-        }else if(dados.especialidade() != null){
-            throw new ValidacaoException("É obrigatório informar especialidade caso não informe o médico");
-        }else{
-            return medicoRepository.escolherMedicoLivre(dados.especialidade(), dados.data());
         }
+        if(dados.especialidade() != null){
+            throw new ValidacaoException("É obrigatório informar especialidade caso não informe o médico");
+        }
+        return medicoRepository.escolherMedicoLivre(dados.especialidade(), dados.data());
     }
 
     public void cancelar(Long id, String motivo) {

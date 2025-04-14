@@ -1,7 +1,5 @@
 package com.api.domain.Medico;
 
-import com.api.domain.Endereco.Especialidade;
-
 public record DadosListagemMedicos(
     Long id,
     String nome, 

@@ -1,7 +1,6 @@
 package com.api.domain.Medico;
 
 import com.api.domain.Endereco.Endereco;
-import com.api.domain.Endereco.Especialidade;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -46,7 +45,7 @@ public class Medico {
         this.email = dados.email();
         this.crm = dados.crm();
         this.telefone = dados.telefone();
-                this.especialidade = dados.especialidade();
+        this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());
         this.ativo =true;
 

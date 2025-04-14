@@ -1,8 +1,10 @@
 package com.api.domain.Consulta;
 
 public enum MotivoCancelamento {
-    PacienteDesistiu("Paciente desistiu"),
-    MedicoCancelou("Médico cancelou");
+    PACIENTE_DESISTIU("Paciente desistiu"),
+    MEDICO_CANCELOU("Médico cancelou"),
+    OUTROS("Outros motivos");
+
 
     private String descricao;
 

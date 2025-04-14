@@ -1,7 +1,6 @@
 package com.api.domain.Medico;
 
 import com.api.domain.Endereco.Endereco;
-import com.api.domain.Endereco.Especialidade;
 
 public record MedicoDetalhado(
     Long id,
@@ -15,6 +14,10 @@ public record MedicoDetalhado(
 
     public MedicoDetalhado(Medico medico){
         this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getTelefone(), medico.getCrm(), medico.getEspecialidade(), medico.getEndereco());
+    }
+
+    public MedicoDetalhado(MedicoDTO medicoDTO){
+        this(null, medicoDTO.nome(), medicoDTO.email(), medicoDTO.telefone(), medicoDTO.crm(), medicoDTO.especialidade(), new Endereco(medicoDTO.endereco()));
     }
 
 }

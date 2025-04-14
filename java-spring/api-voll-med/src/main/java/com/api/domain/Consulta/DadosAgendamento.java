@@ -7,20 +7,18 @@ import com.api.domain.Medico.Especialidade;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
-public record ConsultaDTO(
+public record DadosAgendamento(
+     Long idMedico,
 
-    Long id,
+        @NotNull
+        Long idPaciente,
 
-    Long idMedico,
+        @NotNull
+        @Future
+        LocalDateTime data,
 
-    @NotNull
-    Long idPaciente,
-
-    Especialidade especialidade,
-
-    @NotNull
-    @Future
-    LocalDateTime data
+        Especialidade especialidade
 ) {
+
     
 }

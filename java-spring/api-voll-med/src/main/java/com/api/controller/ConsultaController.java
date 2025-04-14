@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.domain.Consulta.AgendaDeConsultas;
 import com.api.domain.Consulta.ConsultaDTO;
+import com.api.domain.Consulta.DadosDetalheConsulta;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("consultas")
+@RequestMapping("/consultas")
 @SecurityRequirement(name = "bearer-key")
 public class ConsultaController {
 
@@ -26,9 +27,9 @@ public class ConsultaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ConsultaDTO> agendar(@RequestBody @Valid ConsultaDTO dados) {
-        agenda.agendarConsulta(dados);
-        return ResponseEntity.ok(new ConsultaDTO(null, null, null, null, null));
+    public ResponseEntity<DadosDetalheConsulta> agendar(@RequestBody @Valid ConsultaDTO dados) {
+        var consulta = agenda.agendarConsulta(dados);
+        return ResponseEntity.ok(consulta);
     }
 
     @DeleteMapping("/{id}")

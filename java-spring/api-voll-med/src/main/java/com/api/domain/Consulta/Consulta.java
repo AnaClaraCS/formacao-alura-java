@@ -2,7 +2,7 @@ package com.api.domain.Consulta;
 
 import java.time.LocalDateTime;
 
-import com.api.domain.Endereco.Especialidade;
+import com.api.domain.Medico.Especialidade;
 import com.api.domain.Medico.Medico;
 import com.api.domain.Paciente.Paciente;
 
@@ -46,11 +46,11 @@ public class Consulta {
 
     private MotivoCancelamento motivoCancelamento;
 
-    public Consulta(Long id, Paciente paciente, Medico medico, Especialidade especialidade, LocalDateTime data) {
+    public Consulta(Long id, Medico medico, Paciente paciente, LocalDateTime data) {
         this.id = id;
         this.paciente = paciente;
         this.medico = medico;
-        this.especialidade = especialidade;
+        this.especialidade = medico.getEspecialidade();
         this.data = data;
         this.ativa = true;
     }
@@ -59,7 +59,5 @@ public class Consulta {
         this.ativa = false;
         this.motivoCancelamento = motivo;
     }
-    
-
     
 }
