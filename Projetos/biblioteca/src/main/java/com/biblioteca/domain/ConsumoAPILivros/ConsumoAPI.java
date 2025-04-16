@@ -1,4 +1,4 @@
-package com.biblioteca.domain.Livro.API;
+package com.biblioteca.domain.ConsumoAPILivros;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 public class ConsumoAPI {
     
-    public String obterDados(String endereco) {
+    public String obterJson(String endereco) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endereco))
