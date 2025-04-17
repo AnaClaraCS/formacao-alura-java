@@ -4,15 +4,19 @@ import java.util.List;
 
 import com.biblioteca.domain.Livro.Livro;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity(name = "Serie")
+@Table(name = "series")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,7 +24,7 @@ import lombok.Setter;
 public class Serie {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     
     private List<String> autores;
 
@@ -36,6 +40,10 @@ public class Serie {
 
     public Serie(String titulo) {
         this.titulo = titulo;
+    }
+
+    public void addLivros(List<Livro> livros) {
+        this.livros = livros;
     }
 
 }

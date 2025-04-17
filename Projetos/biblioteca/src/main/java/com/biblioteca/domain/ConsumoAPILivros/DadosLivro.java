@@ -46,8 +46,8 @@ public class DadosLivro {
     public String toString() {
         return "Titulo: " + titulo + "\n" +
                "Autores: " + autores + "\n" +
-               "Editora: " + editora + "\n" +
-               "Descrição: " + descricao + "\n" +
-               "Imagem: " + imagem + "\n" ;
+               "Editora: " + editora + "\n" ;
+               //"Descrição: " + descricao + "\n" +
+               //"Imagem: " + imagem + "\n" ;
     }
 }
