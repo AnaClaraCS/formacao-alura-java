@@ -6,8 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.biblioteca.Principal.Principal;
-import com.biblioteca.Serie.SerieService;
 import com.biblioteca.domain.Livro.LivroService;
+import com.biblioteca.domain.Serie.SerieService;
 
 @SpringBootApplication
 public class BibliotecaApplication implements CommandLineRunner {

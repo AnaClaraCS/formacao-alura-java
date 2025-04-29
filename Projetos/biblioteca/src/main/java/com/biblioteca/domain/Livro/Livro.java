@@ -1,13 +1,20 @@
 package com.biblioteca.domain.Livro;
 
-import com.biblioteca.Serie.Serie;
-import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.biblioteca.domain.Autor.Autor;
+import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
+import com.biblioteca.domain.Serie.Serie;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,7 +34,6 @@ public class Livro {
     private Long id;
 
     private String titulo;
-    private String autores;
     private String editora;
     private String dataPublicacao;
 
@@ -35,6 +41,14 @@ public class Livro {
     private String categorias;
     private String imagem;
     private String isbn;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "livro_autor",
+        joinColumns = @JoinColumn(name = "livro_id"),
+        inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
+    private List<Autor> autores;
 
     @ManyToOne
     @JoinColumn(name = "serie_id")
@@ -44,7 +58,6 @@ public class Livro {
 
     public Livro(DadosLivro dados){
         this.titulo = dados.getTitulo();
-        this.autores = dados.getAutores();
         this.editora = dados.getEditora();
         this.dataPublicacao = dados.getDataPublicacao();
         this.paginas = dados.getPaginas();
@@ -55,7 +68,19 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro [titulo=" + titulo + "]";
+        return "Livro [titulo=" + titulo +" - " +autores+ "]";
+    }
+
+    public void adicionarAutores(String autoresNome){
+        if(autores == null){
+            this.autores = new ArrayList<>();
+        }
+        for( String nomeAutor:  List.of(autoresNome.split(","))){
+            Autor novoAutor = new Autor(nomeAutor);
+            if(!this.autores.contains(novoAutor)){
+                this.autores.add(novoAutor);
+            }
+        }
     }
 
     

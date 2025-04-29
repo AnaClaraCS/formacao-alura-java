@@ -1,5 +1,7 @@
 package com.biblioteca.domain.ConsumoAPILivros;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +25,15 @@ public class DadosLivro {
     public DadosLivro( LivroResponseDTO dto){
 
         this.titulo = dto.volumeInfo().titulo();
-        this.autores = String.join(", ", dto.volumeInfo().autores());
+        
+        List<String> aut = dto.volumeInfo().autores();
+        this.autores = (aut != null) ? String.join(", ", aut) : "Autor desconhecido";        
         this.editora = dto.volumeInfo().editora();
         this.dataPublicacao = dto.volumeInfo().dataPublicacao();
         this.paginas = dto.volumeInfo().paginas();
-        this.categorias = String.join(", ", dto.volumeInfo().categorias());
+
+        List<String> cat = dto.volumeInfo().categorias();
+        this.categorias = (cat != null) ? String.join(", ", cat) : "Sem categoria"; 
         this.imagem = (dto.volumeInfo().imagem() != null && dto.volumeInfo().imagem().thumbnail() != null)
             ? dto.volumeInfo().imagem().thumbnail()
             : "Sem imagem";

@@ -1,11 +1,11 @@
-package com.biblioteca.repository;
+package com.biblioteca.domain.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.biblioteca.Serie.Serie;
+import com.biblioteca.domain.Serie.Serie;
 
 public interface SerieRepository extends JpaRepository<Serie, Long> {
     List<Serie> findByTituloContainingIgnoreCase(String titulo);

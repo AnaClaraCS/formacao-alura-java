@@ -1,11 +1,11 @@
-package com.biblioteca.Serie;
+package com.biblioteca.domain.Serie;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.biblioteca.repository.SerieRepository;
+import com.biblioteca.domain.repository.SerieRepository;
 
 import jakarta.transaction.Transactional;
 

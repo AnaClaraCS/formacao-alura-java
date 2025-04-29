@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.biblioteca.repository.LivroRepository;
+import com.biblioteca.domain.repository.LivroRepository;
 
 @Service
 public class LivroService {
@@ -37,9 +37,9 @@ public class LivroService {
         return repositorio.findByTituloContainingIgnoreCase(titulo);
     }
     
-    public List<Livro> buscarPorAutor(String autor) {
-        return repositorio.findByAutoresContainingIgnoreCase(autor);
-    }
+    // public List<Livro> buscarPorAutor(String autor) {
+    //     return repositorio.findByAutoresContainingIgnoreCase(autor);
+    // }
 
     public List<Livro> buscarPorEditora(String editora) {
         return repositorio.findByEditoraContainingIgnoreCase(editora);

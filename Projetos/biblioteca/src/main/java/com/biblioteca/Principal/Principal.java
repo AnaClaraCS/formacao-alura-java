@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.biblioteca.Serie.Serie;
-import com.biblioteca.Serie.SerieService;
 import com.biblioteca.domain.ConsumoAPILivros.ConsumoApiLivros;
 import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
 import com.biblioteca.domain.Livro.Livro;
 import com.biblioteca.domain.Livro.LivroService;
+import com.biblioteca.domain.Serie.Serie;
+import com.biblioteca.domain.Serie.SerieService;
 
 public class Principal {
     private LivroService livroService;
@@ -84,8 +84,6 @@ public class Principal {
     public void cadastrarLivro(){
         System.out.println("Digite o nome do livro:");
         String nomeLivro = scanner.nextLine();
-
-        System.out.println(nomeLivro);
 
         ConsumoApiLivros consumoAPI = new ConsumoApiLivros();
         List<DadosLivro> livros = consumoAPI.pesquisarTitulo(nomeLivro);
@@ -176,4 +174,5 @@ public class Principal {
 
         return livros;
     }
+
 }
