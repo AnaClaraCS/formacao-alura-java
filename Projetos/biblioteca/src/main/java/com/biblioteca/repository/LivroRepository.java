@@ -3,6 +3,7 @@ package com.biblioteca.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+
 import com.biblioteca.domain.Livro.Livro;
 
 public interface LivroRepository extends JpaRepository<Livro, Long> {
@@ -13,6 +14,6 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
 
     List<Livro> findByEditoraContainingIgnoreCase(String editora);
 
-    
-    
+   // List<Livro> findBySerie(Serie serie);
+
 }

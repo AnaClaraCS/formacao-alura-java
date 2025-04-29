@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,14 +31,13 @@ public class Livro {
     private String editora;
     private String dataPublicacao;
 
-    @Lob
-    private String descricao;
     private int paginas;
     private String categorias;
     private String imagem;
     private String isbn;
 
     @ManyToOne
+    @JoinColumn(name = "serie_id")
     private Serie serie;
 
     private int ordemSerie;
@@ -48,7 +47,6 @@ public class Livro {
         this.autores = dados.getAutores();
         this.editora = dados.getEditora();
         this.dataPublicacao = dados.getDataPublicacao();
-        this.descricao = dados.getDescricao();
         this.paginas = dados.getPaginas();
         this.categorias = dados.getCategorias();
         this.imagem = dados.getImagem();

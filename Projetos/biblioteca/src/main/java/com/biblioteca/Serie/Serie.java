@@ -1,9 +1,11 @@
 package com.biblioteca.Serie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.biblioteca.domain.Livro.Livro;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +32,7 @@ public class Serie {
 
     private String titulo;
 
-    @OneToMany
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Livro> livros;
 
     public Serie(String titulo, List<String> autores) {
@@ -42,8 +44,36 @@ public class Serie {
         this.titulo = titulo;
     }
 
-    public void addLivros(List<Livro> livros) {
-        this.livros = livros;
+    public void adicionarLivros(List<Livro> livros) {
+        for( Livro livro: livros) {
+            adicionarLivro(livro);
+        }
     }
+
+    public void adicionarLivro(Livro livro) {
+        if (this.livros == null) {
+            this.livros = new ArrayList<>();
+        }
+        livro.setSerie(this);
+        this.livros.add(livro);
+        adicionarAutor(livro.getAutores());
+    }
+
+    public void adicionarAutor(String autor) {
+        if (this.autores == null) {
+            this.autores = new ArrayList<>();
+        }
+        else if(this.autores.contains(autor)) {
+            return;
+        }
+        this.autores.add(autor);
+    }
+
+    @Override
+    public String toString() {
+        return  titulo;
+    }
+
+    
 
 }

@@ -18,8 +18,12 @@ public class ConsumoApiLivros {
 
         ConsumoAPI consumoAPI = new ConsumoAPI();
         String json = consumoAPI.obterJson(URL + titulo);
+
         try {
             ResponseApiDTO response = mapper.readValue(json, ResponseApiDTO.class);
+            if (response == null || response.livros() == null) {
+                throw new RuntimeException("Nenhum livro encontrado.");
+            }
             List<DadosLivro> livros = response.livros().stream().map( l -> new DadosLivro(l)).collect(Collectors.toList());
             return livros;
         } catch (JsonMappingException e) {

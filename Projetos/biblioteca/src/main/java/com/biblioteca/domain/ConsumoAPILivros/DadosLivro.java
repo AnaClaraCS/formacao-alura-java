@@ -14,7 +14,6 @@ public class DadosLivro {
     private String autores;
     private String editora;
     private String dataPublicacao;
-    private String descricao;
     private int paginas;
     private String categorias;
     private String imagem;
@@ -27,7 +26,6 @@ public class DadosLivro {
         this.autores = String.join(", ", dto.volumeInfo().autores());
         this.editora = dto.volumeInfo().editora();
         this.dataPublicacao = dto.volumeInfo().dataPublicacao();
-        this.descricao = dto.volumeInfo().descricao();
         this.paginas = dto.volumeInfo().paginas();
         this.categorias = String.join(", ", dto.volumeInfo().categorias());
         this.imagem = (dto.volumeInfo().imagem() != null && dto.volumeInfo().imagem().thumbnail() != null)
@@ -47,7 +45,5 @@ public class DadosLivro {
         return "Titulo: " + titulo + "\n" +
                "Autores: " + autores + "\n" +
                "Editora: " + editora + "\n" ;
-               //"Descrição: " + descricao + "\n" +
-               //"Imagem: " + imagem + "\n" ;
     }
 }

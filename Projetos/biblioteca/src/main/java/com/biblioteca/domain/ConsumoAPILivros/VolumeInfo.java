@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @JsonAlias("authors") List<String> autores,
         @JsonAlias("publisher") String editora,
         @JsonAlias("publishedDate") String dataPublicacao,
-        @JsonAlias("description") String descricao,
         @JsonAlias("pageCount") int paginas,
         @JsonAlias("categories") List<String> categorias,
         @JsonAlias("imageLinks") ImageLinks imagem,
