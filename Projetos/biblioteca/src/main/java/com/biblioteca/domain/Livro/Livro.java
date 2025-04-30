@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.biblioteca.domain.Autor.Autor;
-import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
+import com.biblioteca.domain.ConsumoAPILivros.LivroAPIGoogle;
 import com.biblioteca.domain.Serie.Serie;
 
 import jakarta.persistence.CascadeType;
@@ -36,12 +36,10 @@ public class Livro {
 
     private String titulo;
     private String editora;
-    private String dataPublicacao;
 
     private int paginas;
     private String categorias;
     private String imagem;
-    private String isbn;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -57,14 +55,12 @@ public class Livro {
 
     private double ordemSerie;
 
-    public Livro(DadosLivro dados){
+    public Livro(LivroAPIGoogle dados){
         this.titulo = dados.getTitulo();
         this.editora = dados.getEditora();
-        this.dataPublicacao = dados.getDataPublicacao();
         this.paginas = dados.getPaginas();
         this.categorias = dados.getCategorias();
         this.imagem = dados.getImagem();
-        this.isbn = dados.getIsbn13() != null ? dados.getIsbn13() : dados.getIsbn10();
         adicionarAutores(dados.getAutores());
     }
 
@@ -84,9 +80,7 @@ public class Livro {
         }
         System.out.println("Editora: " + editora);
         System.out.println("Categorias: " + categorias);
-        System.out.println("Data de Publicacao: " + dataPublicacao);
         System.out.println("Paginas: " + paginas);
-        System.out.println("ISBN: " + isbn);
         System.out.println("Imagem: " + imagem);
     }
 

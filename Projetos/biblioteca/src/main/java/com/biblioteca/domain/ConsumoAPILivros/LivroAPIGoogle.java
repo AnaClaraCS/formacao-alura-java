@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DadosLivro {
+public class LivroAPIGoogle {
     private String titulo;
     private String autores;
     private String editora;
@@ -22,7 +22,7 @@ public class DadosLivro {
     private String isbn10;
     private String isbn13;
 
-    public DadosLivro( LivroResponseDTO dto){
+    public LivroAPIGoogle( LivroResponseDTO dto){
 
         this.titulo = dto.volumeInfo().titulo();
         

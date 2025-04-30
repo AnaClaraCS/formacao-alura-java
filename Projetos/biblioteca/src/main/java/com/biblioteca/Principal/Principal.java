@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.biblioteca.domain.ConsumoAPILivros.ConsumoApiLivros;
-import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
+import com.biblioteca.domain.ConsumoAPILivros.LivroAPIGoogle;
 import com.biblioteca.domain.Livro.Livro;
 import com.biblioteca.domain.Livro.LivroService;
 import com.biblioteca.domain.Serie.Serie;
@@ -89,10 +89,10 @@ public class Principal {
         String nomeLivro = scanner.nextLine();
 
         ConsumoApiLivros consumoAPI = new ConsumoApiLivros();
-        List<DadosLivro> livros = consumoAPI.pesquisarTitulo(nomeLivro);
+        List<LivroAPIGoogle> livros = consumoAPI.pesquisarTitulo(nomeLivro);
 
         for (int i = 0; i < livros.size(); i++) {
-            DadosLivro livro = livros.get(i);
+            LivroAPIGoogle livro = livros.get(i);
             System.out.println("Livro " + (i + 1) + ": " + livro);
         }
 
