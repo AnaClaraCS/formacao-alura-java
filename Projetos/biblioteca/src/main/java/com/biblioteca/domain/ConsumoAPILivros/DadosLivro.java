@@ -37,13 +37,15 @@ public class DadosLivro {
         this.imagem = (dto.volumeInfo().imagem() != null && dto.volumeInfo().imagem().thumbnail() != null)
             ? dto.volumeInfo().imagem().thumbnail()
             : "Sem imagem";
-        for (IndustryIdentifier id : dto.volumeInfo().industryIdentifiers()) {
-            if (id.tipo().equals("ISBN_10")) {
-                this.isbn10 = id.identificador();
-            } else if (id.tipo().equals("ISBN_13")) {
-                this.isbn13 = id.identificador();
+        if( dto.volumeInfo().industryIdentifiers() != null){    
+            for (IndustryIdentifier id : dto.volumeInfo().industryIdentifiers()) {
+                if (id.tipo().equals("ISBN_10")) {
+                    this.isbn10 = id.identificador();
+                } else if (id.tipo().equals("ISBN_13")) {
+                    this.isbn13 = id.identificador();
+                }
             }
-        }        
+        }      
     }
 
     @Override

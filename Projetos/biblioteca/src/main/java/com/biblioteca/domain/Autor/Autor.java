@@ -37,13 +37,14 @@ public class Autor {
         this.nome = nome;
     }
 
-    public void adicionarLivros(List<Livro> livros) {
-        for (Livro livro : livros) {
-            adicionarLivro(livro);
-        }
+    @Override
+    public String toString() {
+        return "Autor [" + nome + "]";
     }
 
-    private void adicionarLivro(Livro livro) {
+    // RELAÇÃO - Livro
+
+    public void adicionarLivro(Livro livro) {
         if(this.livros == null) {
             this.livros = new ArrayList<>();
         }
@@ -51,5 +52,12 @@ public class Autor {
             this.livros.add(livro);
         }
     }
+
+    public void removerLivro(Livro livro) {
+        if(this.livros != null && this.livros.contains(livro)){
+            this.livros.remove(livro);
+        }
+    }
+
 
 }

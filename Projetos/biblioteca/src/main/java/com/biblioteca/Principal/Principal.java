@@ -1,8 +1,10 @@
 package com.biblioteca.Principal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.biblioteca.domain.ConsumoAPILivros.ConsumoApiLivros;
 import com.biblioteca.domain.ConsumoAPILivros.DadosLivro;
@@ -11,11 +13,15 @@ import com.biblioteca.domain.Livro.LivroService;
 import com.biblioteca.domain.Serie.Serie;
 import com.biblioteca.domain.Serie.SerieService;
 
+@Component
 public class Principal {
+    @Autowired
     private LivroService livroService;
+    @Autowired
     private SerieService serieService;
 
     private final String menu = """
+        ------------------------------------------------
             1- Listar livros
             2- Adicionar livro
             3- Criar serie
@@ -23,6 +29,7 @@ public class Principal {
             5- Adicionar livro a serie
             6- Listar livros de uma serie
             0- Sair
+        ------------------------------------------------
             """;
 
     private Scanner scanner = new Scanner(System.in);
@@ -37,9 +44,9 @@ public class Principal {
 
         do{
             System.out.println(menu);
+            System.out.println("Escolha uma opção: ");
             op = scanner.nextInt();
             scanner.nextLine();
-            System.out.println("Opção escolhida: " + op);
 
             switch (op) {
                 case 1 -> listarLivros();
@@ -51,37 +58,33 @@ public class Principal {
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
-        }while (op != 0);
-        
+        }while (op != 0); 
     }
 
     private void listarLivrosSerie() {
+        System.out.println(" ****** Listar livros de uma serie ****** ");
         Serie serie = selecionarSerie();
-        System.out.println("Livros da serie: " + serie.getTitulo()+ serie.getLivros());
-        for(Livro livro : serie.getLivros()) {
-            System.out.println(livro);
-        }
+        serie.informacoesSerie();
     }
 
     private void adicinarLivroEmSerie() {
+        System.out.println(" ****** Adicionar livros em serie ****** ");
         Serie serie = selecionarSerie();
-
-        List<Livro> livros = criarListaLivros();
-        if(livros.isEmpty()){
-            System.out.println("Nenhum livro adicionado a serie.");
-        }
-        else{
-            serie.adicionarLivros(livros);
-            this.serieService.salvar(serie);
-        }
+        adicionarLivrosEmSerie(serie);
+        this.serieService.salvar(serie);
     }
 
     public void listarLivros(){
+        System.out.println(" ****** Lista de livros ****** ");
         List<Livro> lista = this.livroService.listarTodos();
-        System.out.println("Lista de livros: "+lista);
+        for(int i=0; i<lista.size(); i++){
+            Livro livro = lista.get(i);
+            System.out.println(i +" - " + livro);
+        }
     }
 
     public void cadastrarLivro(){
+        System.out.println(" ****** Cadastrar livro ****** ");
         System.out.println("Digite o nome do livro:");
         String nomeLivro = scanner.nextLine();
 
@@ -93,33 +96,32 @@ public class Principal {
             System.out.println("Livro " + (i + 1) + ": " + livro);
         }
 
-        System.out.println("Qual livro deseja salvar? ");
-        int op = scanner.nextInt() -1;
+        System.out.println("Qual livro deseja salvar? (0 para nenhum)");
+        int op = scanner.nextInt();
         scanner.nextLine();
 
+        if(op != 0 && op <= livros.size()){
+            op = op - 1;
+            Livro livroEscolhido = livroService.salvar(new Livro(livros.get(op)));
+            System.out.println("Livro salvo com sucesso: " + livroEscolhido);
+        }
+        else{
+            System.out.println("Nenhum livro salvo");
+        }
 
-        Livro livroEscolhido = livroService.salvar(new Livro(livros.get(op)));
-
-        System.out.println("Livro salvo com sucesso: " + livroEscolhido);
     }
     
     public void cadrastrarSerie(){
+        System.out.println(" ****** Cadastrar serie ****** ");
         System.out.println("Digite o nome da serie:");
         String nome = scanner.nextLine();
-        
         Serie serie = new Serie(nome);
-        
-        List<Livro> livros = criarListaLivros();
-        if(livros.isEmpty()){
-            System.out.println("Nenhum livro adicionado a serie.");
-        }
-        else{
-            serie.adicionarLivros(livros);
-        }
         this.serieService.salvar(serie);
+        adicionarLivrosEmSerie(serie);
     }
 
     public List<Serie> listarSeries(){
+        System.out.println(" ****** Lista de series ****** ");
         List<Serie> lista = this.serieService.listarTodos();
 
         if(lista.isEmpty()){
@@ -148,8 +150,7 @@ public class Principal {
         return lista.get(op);
     }
 
-    private List<Livro> criarListaLivros(){
-        List<Livro> livros = new ArrayList<>();
+    private void adicionarLivrosEmSerie(Serie serie){
 
         String nomeLivro;
         
@@ -162,17 +163,25 @@ public class Principal {
                 Livro livro = lista.get(i);
                 System.out.println("Livro " + (i + 1) + ": " + livro);
             }
+
             System.out.println("Qual livro deseja adicionar a serie? ");
-            int op = scanner.nextInt() -1;
+            int op = scanner.nextInt();
             scanner.nextLine();
-            if(op < 0 || op >= lista.size()){
-                System.out.println("Opção inválida!");
+
+            if(op == 0 || op > lista.size()){
+                System.out.println("Nenhum livro salvo");
                 continue;
             }
-            livros.add(lista.get(op));
+
+            op = op - 1;
+            Livro livroEscolhido = lista.get(op);
+            System.out.println("Qual a ordem do livro na serie? ");
+            int ordem = scanner.nextInt();
+            scanner.nextLine();
+
+            this.livroService.adicionarSerie(livroEscolhido, serie, ordem);
         } while (!nomeLivro.isBlank());
 
-        return livros;
     }
 
 }

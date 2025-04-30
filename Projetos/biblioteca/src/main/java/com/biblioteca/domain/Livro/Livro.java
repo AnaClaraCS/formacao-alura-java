@@ -9,6 +9,7 @@ import com.biblioteca.domain.Serie.Serie;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ public class Livro {
     private String imagem;
     private String isbn;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "livro_autor",
         joinColumns = @JoinColumn(name = "livro_id"),
@@ -54,7 +55,7 @@ public class Livro {
     @JoinColumn(name = "serie_id")
     private Serie serie;
 
-    private int ordemSerie;
+    private double ordemSerie;
 
     public Livro(DadosLivro dados){
         this.titulo = dados.getTitulo();
@@ -64,25 +65,71 @@ public class Livro {
         this.categorias = dados.getCategorias();
         this.imagem = dados.getImagem();
         this.isbn = dados.getIsbn13() != null ? dados.getIsbn13() : dados.getIsbn10();
+        adicionarAutores(dados.getAutores());
     }
 
     @Override
     public String toString() {
-        return "Livro [titulo=" + titulo +" - " +autores+ "]";
+        return titulo +" ( " + autores + " )";
     }
 
-    public void adicionarAutores(String autoresNome){
-        if(autores == null){
-            this.autores = new ArrayList<>();
+    public void informacoesLivro(){
+        System.out.println("Titulo: " + titulo);
+        System.out.println("Autores: ");
+        for( Autor autor : autores){
+            System.out.println(autor.getNome());
         }
+        if(serie != null){
+            System.out.println("Serie: " + serie.getTitulo() + " - Ordem: " + ordemSerie);
+        }
+        System.out.println("Editora: " + editora);
+        System.out.println("Categorias: " + categorias);
+        System.out.println("Data de Publicacao: " + dataPublicacao);
+        System.out.println("Paginas: " + paginas);
+        System.out.println("ISBN: " + isbn);
+        System.out.println("Imagem: " + imagem);
+    }
+
+    // RELAÇÃO - Autor
+
+    private void adicionarAutores(String autoresNome){
         for( String nomeAutor:  List.of(autoresNome.split(","))){
             Autor novoAutor = new Autor(nomeAutor);
-            if(!this.autores.contains(novoAutor)){
-                this.autores.add(novoAutor);
-            }
+            adicionarAutor(novoAutor);
         }
     }
 
-    
+    public void adicionarAutor(Autor autor){
+        if(this.autores == null){
+            this.autores = new ArrayList<>();
+        }
+        if(!this.autores.contains(autor)){
+            this.autores.add(autor);
+            autor.adicionarLivro(this);
+        }
+    }
+
+    public void removerAutor(Autor autor){
+        if(this.autores != null && this.autores.contains(autor)){
+            this.autores.remove(autor);
+            autor.removerLivro(this);
+        }
+    }
+
+    // RELAÇÃO - Serie
+
+    public void definirSerie(Serie serie, double ordemSerie){
+        this.serie = serie;
+        this.ordemSerie = ordemSerie;
+        serie.adicionarLivro(this);
+    }
+
+    public void removerSerie(){
+        if (this.serie != null){
+            serie.removerLivro(this);
+        }
+        this.serie = null;
+        this.ordemSerie = 0;
+    }
     
 }
