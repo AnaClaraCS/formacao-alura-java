@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.alura.adopet.api.DTO.AdocaoDTO;
 import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.service.AdocaoService;
 import jakarta.validation.Valid;
@@ -23,10 +24,10 @@ public class AdocaoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> solicitar(@RequestBody @Valid Adocao adocao) {
+    public ResponseEntity<String> solicitar(@RequestBody @Valid AdocaoDTO adocao) {
        try {
             this.service.solicitar(adocao);
-            return ResponseEntity.ok("Adoção solciitada com sucesso!");
+            return ResponseEntity.ok("Adoção solicitada com sucesso!");
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -34,14 +35,14 @@ public class AdocaoController {
 
     @PutMapping("/aprovar")
     @Transactional
-    public ResponseEntity<String> aprovar(@RequestBody @Valid Adocao adocao) {
+    public ResponseEntity<String> aprovar(@RequestBody @Valid AdocaoDTO adocao) {
         service.aprovar(adocao);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/reprovar")
     @Transactional
-    public ResponseEntity<String> reprovar(@RequestBody @Valid Adocao adocao) {
+    public ResponseEntity<String> reprovar(@RequestBody @Valid AdocaoDTO adocao) {
         service.reprovar(adocao);
         return ResponseEntity.ok().build();
     }
