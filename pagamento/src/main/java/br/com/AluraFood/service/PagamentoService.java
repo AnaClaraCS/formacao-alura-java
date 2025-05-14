@@ -1,6 +1,6 @@
 package br.com.AluraFood.service;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
