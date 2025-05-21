@@ -1,10 +1,11 @@
-package br.com.AluraFood.DTO;
+package br.com.AluraFood.pagamento.DTO;
 
-import br.com.AluraFood.model.Status;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+
+import br.com.AluraFood.pagamento.model.Status;
 
 @Getter
 @Setter

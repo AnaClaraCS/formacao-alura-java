@@ -1,4 +1,4 @@
-package br.com.AluraFood.service;
+package br.com.AluraFood.pagamento.service;
 
 import org.springframework.data.domain.Page;
 import org.modelmapper.ModelMapper;
@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.AluraFood.DTO.PagamentoDto;
-import br.com.AluraFood.model.Pagamento;
-import br.com.AluraFood.model.Status;
-import br.com.AluraFood.repository.PagamentoRepository;
+import br.com.AluraFood.pagamento.DTO.PagamentoDto;
+import br.com.AluraFood.pagamento.model.Pagamento;
+import br.com.AluraFood.pagamento.model.Status;
+import br.com.AluraFood.pagamento.repository.PagamentoRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -48,7 +48,7 @@ public class PagamentoService {
         return modelMapper.map(pagamento, PagamentoDto.class);
     }
 
-    public void excluir(Long id){
+    public void excluirPagamento(Long id){
         repository.deleteById(id);
     }
   
