@@ -1,4 +1,4 @@
-// package declaration removed to match the default package
+package br.com.AluraFood.pagamento.controller;
 
 import org.springframework.data.domain.Page;
 
